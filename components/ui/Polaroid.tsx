@@ -27,14 +27,23 @@ export function Polaroid({
 }: PolaroidProps) {
     return (
         <motion.div
-            whileHover={{ scale: 1.05, rotate: rotation + (Math.random() * 4 - 2) }}
+            whileHover={{
+                scale: 1.08,
+                rotate: rotation + (rotation > 0 ? 2 : -2),
+                transition: { type: "spring", stiffness: 300, damping: 20 }
+            }}
             className={cn(
-                "bg-white p-3 pb-8 shadow-lg cursor-pointer transition-shadow hover:shadow-2xl inline-block",
+                "bg-white p-3 pb-8 shadow-[0_10px_20px_rgba(0,0,0,0.5)] cursor-pointer transition-shadow hover:shadow-[0_40px_80px_rgba(0,0,0,0.8)] inline-block relative border border-white/20",
                 className
             )}
             style={{ rotate: `${rotation}deg` }}
             onClick={onClick}
         >
+            {/* Push Pin */}
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-red-800 shadow-[2px_2px_5px_rgba(0,0,0,0.4)] z-10 border border-red-900">
+                <div className="absolute top-1 left-1 w-1 h-1 bg-red-400 rounded-full opacity-50" />
+            </div>
+
             <div className="relative overflow-hidden bg-gray-200" style={{ width, height }}>
                 <Image
                     src={src}
@@ -42,6 +51,9 @@ export function Polaroid({
                     fill
                     className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
                 />
+                {/* Paper Texture Overlay */}
+                <div className="absolute inset-0 pointer-events-none opacity-40 mix-blend-multiply"
+                    style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/natural-paper.png')" }} />
             </div>
             {caption && (
                 <p className="mt-3 text-center font-hand text-black text-xl transform -rotate-1">

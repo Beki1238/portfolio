@@ -40,29 +40,54 @@ export default function EvidencePage() {
 
     return (
         <div className="container mx-auto p-8 relative min-h-screen">
-            <div className="text-center mb-12">
-                <h1 className="text-5xl font-display text-paper-yellow drop-shadow-md">EVIDENCE BOARD</h1>
-                <p className="text-gray-400 font-typewriter">Recovered artifacts from the suspect's hard drive.</p>
+            {/* Corkboard Background Effect (Pseudo-element or simple textured bg) */}
+            <div className="absolute inset-0 z-[-1] opacity-40 mix-blend-overlay pointer-events-none"
+                style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/cork-board.png')" }}>
             </div>
 
-            {/* Grid of Evidence */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 perspective-1000">
-                {EVIDENCE.map((item, index) => (
-                    <div key={item.id} className="relative group perspective-1000">
-                        {/* Red String Connector (Visual Mockup) */}
-                        <div className="absolute top-0 left-1/2 w-0.5 h-full bg-red-900/30 -z-10 group-hover:bg-red-600 transition-colors" />
+            <div className="text-center mb-16 relative">
+                <div className="inline-block bg-[#f4e4bc] px-8 py-4 shadow-lg transform -rotate-1 border border-[#d3c299]">
+                    <h1 className="text-5xl font-display text-red-900 drop-shadow-sm tracking-widest uppercase">
+                        Evidence Board
+                    </h1>
+                    <p className="text-gray-700 font-typewriter text-sm mt-1 uppercase tracking-widest">
+                        Case File #404 // Artifacts
+                    </p>
+                    {/* Tape visual */}
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-32 h-8 bg-white/30 backdrop-blur-sm rotate-2 shadow-sm" />
+                </div>
+            </div>
 
-                        <Polaroid
-                            src={item.image}
-                            alt={item.title}
-                            caption={item.title}
-                            rotation={index % 2 === 0 ? 3 : -3}
-                            className="w-full transform group-hover:scale-105 transition-transform"
-                            onClick={() => setSelectedId(item.id)}
-                        />
-                        <div className="text-center mt-4 font-hand text-gray-400 text-sm">{item.type}</div>
-                    </div>
-                ))}
+            {/* Grid of Evidence (Scatter Layout) */}
+            <div className="flex flex-wrap justify-center gap-16 relative">
+                {EVIDENCE.map((item, index) => {
+                    const rotations = [-4, 2, -1, 5, -2, 3];
+                    const rot = rotations[index % rotations.length];
+                    return (
+                        <div
+                            key={item.id}
+                            className="relative group perspective-1000"
+                            style={{
+                                marginTop: index % 2 === 0 ? '20px' : '0px',
+                                marginLeft: index % 3 === 0 ? '-10px' : '10px'
+                            }}
+                        >
+                            <Polaroid
+                                src={item.image}
+                                alt={item.title}
+                                caption={item.title}
+                                rotation={rot}
+                                className="w-[300px] hover:z-30"
+                                onClick={() => setSelectedId(item.id)}
+                            />
+                            <div className="mt-4 text-center">
+                                <span className="bg-[#f4e4bc] text-black px-2 py-0.5 text-[10px] font-mono border border-black/10 shadow-sm uppercase">
+                                    {item.type}
+                                </span>
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
 
             {/* Modal Overlay */}

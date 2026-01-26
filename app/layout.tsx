@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Special_Elite, Permanent_Marker } from "next/font/google";
 import { Navigation } from "@/components/Navigation";
+import { CustomCursor } from "@/components/CustomCursor";
 import "./globals.css";
 
 const inter = Inter({
@@ -35,6 +36,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${specialElite.variable} ${permanentMarker.variable} antialiased bg-[#0e0e0e] text-[#EDEDED] font-sans overflow-hidden`}
       >
+        <CustomCursor />
         <div className="fixed inset-0 pointer-events-none z-0 user-select-none opacity-20"
           style={{ backgroundImage: "url('/subtle-grain.png')" }}></div>
         <Navigation />
