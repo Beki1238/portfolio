@@ -117,6 +117,40 @@ export default function RootLayout({
               <circle cx="1100" cy="950" r="5" fill="#2b0202" />
             </g>
 
+            {/* Large central-ish wash (even darker) */}
+            <path
+              d="M700,450 Q750,400 850,450 T950,550 T750,650 Z"
+              fill="#1a0101"
+              className="opacity-30"
+            />
+
+            {/* Runny streak near suspect */}
+            <g transform="translate(450, 150) rotate(10)" fill="#4a0000">
+              <circle cx="0" cy="0" r="12" />
+              <rect x="-0.5" y="0" width="1.5" height="150" rx="0.5" />
+              <circle cx="0" cy="150" r="3" />
+            </g>
+
+            {/* Extra thick pool bottom left */}
+            <g transform="translate(100, 850)" fill="#3e0101" filter="url(#goo)">
+              <ellipse cx="0" cy="0" rx="80" ry="30" />
+              <circle cx="40" cy="10" r="20" />
+              <circle cx="-30" cy="15" r="25" />
+            </g>
+
+            {/* Fine splatter spray */}
+            <g fill="#5e0000">
+              {[...Array(20)].map((_, i) => (
+                <circle
+                  key={i}
+                  cx={Math.random() * 2000}
+                  cy={Math.random() * 1000}
+                  r={Math.random() * 2}
+                  className="opacity-60"
+                />
+              ))}
+            </g>
+
             {/* Runny streak middle left */}
             <g transform="translate(100, 300)" fill="#4a0000">
               <circle cx="0" cy="0" r="10" />
