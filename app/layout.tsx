@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${specialElite.variable} ${permanentMarker.variable} antialiased bg-[#0e0e0e] text-[#EDEDED] font-sans overflow-hidden`}
+        className={`${inter.variable} ${specialElite.variable} ${permanentMarker.variable} antialiased bg-[#0e0e0e] text-[#EDEDED] font-sans`}
       >
         <CustomCursor />
 

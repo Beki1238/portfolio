@@ -51,7 +51,7 @@ export const CustomCursor = () => {
 
             {/* Magnifying Glass Cursor - Hand-held design */}
             <motion.div
-                className="fixed top-0 left-0 w-16 h-16 pointer-events-none z-[9999]"
+                className="fixed top-0 left-0 w-12 h-12 pointer-events-none z-[9999]"
                 style={{
                     x: cursorX,
                     y: cursorY,
@@ -71,7 +71,7 @@ export const CustomCursor = () => {
                     <div className="absolute bottom-[20%] right-[20%] w-[10%] h-[10%] bg-white/20 rounded-full blur-[2px]" />
 
                     {/* Hand-held Handle (Straight) */}
-                    <div className="absolute top-[100%] left-1/2 -translate-x-1/2 w-4 h-16 origin-top shadow-xl">
+                    <div className="absolute top-[100%] left-1/2 -translate-x-1/2 w-3 h-12 origin-top shadow-xl">
                         {/* Dark Wood/Plastic Grip */}
                         <div className="w-full h-full bg-gradient-to-b from-[#222] via-[#333] to-[#111] rounded-b-md border-x border-black/50 relative overflow-hidden">
                             {/* Grip Ridges */}
@@ -87,7 +87,7 @@ export const CustomCursor = () => {
 
             {/* Clean Lens Glass Effect */}
             <motion.div
-                className="fixed top-0 left-0 w-32 h-32 rounded-full border border-white/20 pointer-events-none z-[9997]"
+                className="fixed top-0 left-0 w-24 h-24 rounded-full border border-white/20 pointer-events-none z-[9997]"
                 style={{
                     x: cursorX,
                     y: cursorY,
