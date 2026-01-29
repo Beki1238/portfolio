@@ -21,8 +21,6 @@ export function Polaroid({
     caption,
     className,
     rotation = 0,
-    width = 300,
-    height = 300,
     onClick,
 }: PolaroidProps) {
     return (
@@ -36,7 +34,8 @@ export function Polaroid({
             }}
             transition={{ type: "spring", stiffness: 200, damping: 25 }}
             className={cn(
-                "bg-white p-3 pb-8 shadow-[0_10px_20px_rgba(0,0,0,0.5)] cursor-pointer transition-shadow hover:shadow-[0_40px_80px_rgba(0,0,0,0.8)] inline-block relative border border-white/20",
+                "bg-white p-2 pb-6 shadow-[0_10px_30px_rgba(0,0,0,0.4)] cursor-pointer transition-shadow hover:shadow-[0_40px_80px_rgba(0,0,0,0.7)] inline-block relative border border-white/20",
+                "w-[240px] sm:w-[280px]",
                 className
             )}
             onClick={onClick}
@@ -46,25 +45,18 @@ export function Polaroid({
                 <div className="absolute top-1 left-1 w-1 h-1 bg-red-400 rounded-full opacity-50" />
             </div>
 
-            <div
-                className="relative overflow-hidden bg-white/5 grayscale hover:grayscale-0 transition-all duration-500"
-                style={{
-                    width: width || '100%',
-                    aspectRatio: height && width ? `${width}/${height}` : '1/1'
-                }}
-            >
-                <Image
+            <div className="relative bg-gray-100 grayscale hover:grayscale-0 transition-all duration-500 overflow-hidden aspect-square flex items-center justify-center">
+                <img
                     src={src}
                     alt={alt}
-                    fill
-                    className="object-contain transition-all duration-500"
+                    className="max-w-full max-h-full object-contain block"
                 />
                 {/* Paper Texture Overlay */}
                 <div className="absolute inset-0 pointer-events-none opacity-40 mix-blend-multiply"
                     style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/natural-paper.png')" }} />
             </div>
             {caption && (
-                <p className="mt-3 text-center font-hand text-black text-lg transform -rotate-1 truncate px-2">
+                <p className="mt-3 text-center font-hand text-black text-base transform -rotate-1 px-2 leading-tight">
                     {caption}
                 </p>
             )}

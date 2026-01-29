@@ -108,7 +108,7 @@ const EVIDENCE: Project[] = [
 export default function EvidencePage() {
     const [selectedId, setSelectedId] = useState<number | null>(null);
     const [searchQuery, setSearchQuery] = useState("");
-    const [activeTech, setActiveTech] = useState<string | null>(null);
+    const [activeTechs, setActiveTechs] = useState<string[]>([]);
     const [isArchiveOpen, setIsArchiveOpen] = useState(false);
     const [fullscreenImageIndex, setFullscreenImageIndex] = useState<number | null>(null);
 
@@ -119,17 +119,20 @@ export default function EvidencePage() {
         return Array.from(techs).sort();
     }, []);
 
+    const commonTech = ["NextJs", "Tailwind", "Flutter", "Supabase", "Python"];
+
     const filteredEvidence = useMemo(() => {
         return EVIDENCE.filter(item => {
             const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 item.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 item.tech.some(t => t.toLowerCase().includes(searchQuery.toLowerCase()));
 
-            const matchesTech = !activeTech || item.tech.includes(activeTech);
+            const matchesTech = activeTechs.length === 0 ||
+                activeTechs.every(tech => item.tech.includes(tech));
 
             return matchesSearch && matchesTech;
         });
-    }, [searchQuery, activeTech]);
+    }, [searchQuery, activeTechs]);
 
     const selectedItem = EVIDENCE.find((e) => e.id === selectedId);
 
@@ -209,25 +212,29 @@ export default function EvidencePage() {
                         <div className="flex flex-wrap gap-2 items-center">
                             <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mr-2">TECH STACK:</span>
                             <button
-                                onClick={() => setActiveTech(null)}
-                                className={`relative px-3 py-1 text-[11px] transition-all group/btn ${!activeTech ? 'text-red-900 font-bold' : 'text-gray-500 hover:text-red-900'}`}
+                                onClick={() => setActiveTechs([])}
+                                className={`relative px-3 py-1 text-[11px] transition-all group/btn ${activeTechs.length === 0 ? 'text-red-900 font-bold' : 'text-gray-500 hover:text-red-900'}`}
                             >
                                 ALL TOOLS
-                                <div className={`absolute -bottom-1 left-0 h-[2px] bg-red-900/60 rounded-full transition-all duration-300 ${!activeTech ? 'w-full' : 'w-0 group-hover/btn:w-full'}`} />
+                                <div className={`absolute -bottom-1 left-0 h-[2px] bg-red-900/60 rounded-full transition-all duration-300 ${activeTechs.length === 0 ? 'w-full' : 'w-0 group-hover/btn:w-full'}`} />
                             </button>
-                            {allTech.slice(0, 6).map(tech => (
+                            {commonTech.map(tech => (
                                 <button
                                     key={tech}
-                                    onClick={() => setActiveTech(activeTech === tech ? null : tech)}
-                                    className={`relative px-3 py-1 text-[11px] transition-all group/btn ${activeTech === tech ? 'text-red-900 font-bold' : 'text-gray-500 hover:text-red-900'}`}
+                                    onClick={() => {
+                                        setActiveTechs(prev =>
+                                            prev.includes(tech) ? prev.filter(t => t !== tech) : [...prev, tech]
+                                        );
+                                    }}
+                                    className={`relative px-3 py-1 text-[11px] transition-all group/btn ${activeTechs.includes(tech) ? 'text-red-900 font-bold' : 'text-gray-500 hover:text-red-900'}`}
                                 >
                                     {tech.toUpperCase()}
-                                    <div className={`absolute -bottom-1 left-0 h-[2px] bg-red-900/60 rounded-full transition-all duration-300 ${activeTech === tech ? 'w-full' : 'w-0 group-hover/btn:w-full'}`} />
+                                    <div className={`absolute -bottom-1 left-0 h-[2px] bg-red-900/60 rounded-full transition-all duration-300 ${activeTechs.includes(tech) ? 'w-full' : 'w-0 group-hover/btn:w-full'}`} />
                                 </button>
                             ))}
                         </div>
 
-                        {allTech.length > 6 && (
+                        {allTech.some(t => !commonTech.includes(t)) && (
                             <div className="relative">
                                 <button
                                     onClick={() => setIsArchiveOpen(!isArchiveOpen)}
@@ -246,14 +253,15 @@ export default function EvidencePage() {
                                         >
                                             <div className="text-[9px] font-bold text-gray-400 mb-2 border-b border-black/5 pb-1 uppercase tracking-widest text-center">Classified Technologies</div>
                                             <div className="grid grid-cols-2 gap-2">
-                                                {allTech.slice(6).map(tech => (
+                                                {allTech.filter(t => !commonTech.includes(t)).map(tech => (
                                                     <button
                                                         key={tech}
                                                         onClick={() => {
-                                                            setActiveTech(activeTech === tech ? null : tech);
-                                                            setIsArchiveOpen(false);
+                                                            setActiveTechs(prev =>
+                                                                prev.includes(tech) ? prev.filter(t => t !== tech) : [...prev, tech]
+                                                            );
                                                         }}
-                                                        className={`px-2 py-1.5 text-[10px] font-mono border text-left truncate transition-all ${activeTech === tech ? 'bg-red-900 text-white border-red-900' : 'hover:bg-red-800/10 hover:border-red-900/30 text-gray-600'}`}
+                                                        className={`px-2 py-1.5 text-[10px] font-mono border text-left truncate transition-all ${activeTechs.includes(tech) ? 'bg-red-900 text-white border-red-900' : 'hover:bg-red-800/10 hover:border-red-900/30 text-gray-600'}`}
                                                     >
                                                         {tech.toUpperCase()}
                                                     </button>
