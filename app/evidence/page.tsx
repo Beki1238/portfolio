@@ -95,40 +95,14 @@ const EVIDENCE: Project[] = [
     },
     {
         id: 8,
-        title: "Quantum Iota",
-        type: "Experiments",
-        images: ["/images/project-h.png"],
-        tech: ["Qiskit", "Python", "React"],
-        desc: "Simulation of quantum gates and algorithms for education.",
-        date: "2024-05-15"
+        title: "Boxsy",
+        type: "Website",
+        images: ["/images/projects/boxsy/1.png", "/images/projects/boxsy/2.png"],
+        tech: ["NextJs", "Tailwind", "Supabase", "Python", "SQL", "Knock", "Stripe"],
+        desc: "your AI-powered fundraising operations system. Built to  speed up your raise, automate updates and keep investors engaged.",
+        date: "2025-05-15",
+        live: "https://www.boxsy.io/"
     },
-    {
-        id: 9,
-        title: "DEX Kappa",
-        type: "Blockchain",
-        images: ["/images/project-i.png"],
-        tech: ["Solidity", "Ethers.js", "Hardhat"],
-        desc: "Decentralized exchange with automated market maker logic.",
-        date: "2024-06-10"
-    },
-    {
-        id: 10,
-        title: "Cloud Lambda",
-        type: "Infrastructure",
-        images: ["/images/project-j.png"],
-        tech: ["Terraform", "Kubernetes", "Azure"],
-        desc: "Self-healing infrastructure as code for microservices.",
-        date: "2023-08-14"
-    },
-    {
-        id: 11,
-        title: "Vision Mu",
-        type: "AI/ML",
-        images: ["/images/project-k.png"],
-        tech: ["OpenCV", "TensorFlow", "C++"],
-        desc: "Real-time object detection and tracking for security cameras.",
-        date: "2024-07-02"
-    }
 ];
 
 export default function EvidencePage() {
