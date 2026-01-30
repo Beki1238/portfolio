@@ -226,11 +226,8 @@ const WeaponCard = ({
 
     return (
         <motion.div
-            layout
-            onHoverStart={() => {
-                setActiveId(skill.id);
-            }}
-            onHoverEnd={() => setActiveId(null)}
+            onMouseEnter={() => setActiveId(skill.id)}
+            onMouseLeave={() => setActiveId(null)}
             onClick={() => {
                 onFocus(skill);
             }}
@@ -336,7 +333,7 @@ const IntelligenceMonitor = ({ activeSkill }: { activeSkill: Skill | null }) => 
     return (
         <div className="w-full bg-[#0d0d0d] border border-gray-800 p-6 relative overflow-hidden flex flex-col gap-6 shadow-2xl rounded-sm">
             {/* Radar Scan Section */}
-            <div className="relative w-full aspect-square max-w-[200px] mx-auto opacity-80">
+            <div className="relative w-full aspect-square max-w-[200px] mx-auto opacity-80 mb-2">
                 <div className="absolute inset-0 border-2 border-green-900/30 rounded-full" />
                 <div className="absolute inset-4 border border-green-900/20 rounded-full" />
                 <div className="absolute inset-8 border border-green-900/10 rounded-full" />
@@ -344,14 +341,44 @@ const IntelligenceMonitor = ({ activeSkill }: { activeSkill: Skill | null }) => 
                 {/* Radar Sweep */}
                 <motion.div
                     animate={{ rotate: 360 }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                    className="absolute inset-0 bg-gradient-to-tr from-transparent via-transparent to-green-500/20 origin-center rounded-full"
+                    transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                    className={cn(
+                        "absolute inset-0 bg-gradient-to-tr from-transparent via-transparent to-green-500/20 origin-center rounded-full transition-opacity duration-300",
+                        activeSkill ? "opacity-100" : "opacity-40"
+                    )}
                     style={{ clipPath: "polygon(50% 50%, 100% 0, 100% 100%)" }}
                 />
 
-                {/* Radar Pings */}
-                <div className="absolute top-1/4 left-1/3 w-2 h-2 bg-green-500 rounded-full animate-ping shadow-[0_0_10px_#22c55e]" />
-                <div className="absolute bottom-1/3 right-1/4 w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse shadow-[0_0_10px_#ef4444]" />
+                {/* Dynamic Radar Pings */}
+                <AnimatePresence>
+                    {activeSkill ? (
+                        <>
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0 }}
+                                className="absolute top-1/4 left-1/3 w-2 h-2 bg-green-500 rounded-full animate-ping shadow-[0_0_10px_#22c55e]"
+                            />
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: [0, 1, 0], x: [0, 10, -5], y: [0, -10, 5] }}
+                                transition={{ duration: 2, repeat: Infinity }}
+                                className="absolute bottom-1/3 right-1/4 w-1.5 h-1.5 bg-red-500 rounded-full shadow-[0_0_10px_#ef4444]"
+                            />
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                className="absolute inset-0 flex items-center justify-center"
+                            >
+                                <div className="text-[8px] font-mono text-green-500 bg-black/80 px-1 border border-green-500/50 animate-pulse uppercase">
+                                    TGT_ACQUIRED
+                                </div>
+                            </motion.div>
+                        </>
+                    ) : (
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1 h-1 bg-green-900/20 rounded-full" />
+                    )}
+                </AnimatePresence>
 
                 {/* Crosshair */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-30">
@@ -368,7 +395,7 @@ const IntelligenceMonitor = ({ activeSkill }: { activeSkill: Skill | null }) => 
                 </div>
 
                 <div className="space-y-2 max-h-[250px] overflow-hidden scrollbar-none">
-                    <AnimatePresence mode="wait">
+                    <AnimatePresence>
                         {activeSkill ? (
                             <motion.div
                                 key={activeSkill.id}
