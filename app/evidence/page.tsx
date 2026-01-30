@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSearchParams } from "next/navigation";
 import { Polaroid } from "@/components/ui/Polaroid";
 import { X, Search, Filter, ChevronLeft, ChevronRight, Github, ExternalLink } from "lucide-react";
 
@@ -106,11 +107,32 @@ const EVIDENCE: Project[] = [
 ];
 
 export default function EvidencePage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center text-white font-mono uppercase tracking-widest">Initialising_Evidence_Stream...</div>}>
+            <EvidenceContent />
+        </Suspense>
+    );
+}
+
+function EvidenceContent() {
     const [selectedId, setSelectedId] = useState<number | null>(null);
     const [searchQuery, setSearchQuery] = useState("");
     const [activeTechs, setActiveTechs] = useState<string[]>([]);
     const [isArchiveOpen, setIsArchiveOpen] = useState(false);
     const [fullscreenImageIndex, setFullscreenImageIndex] = useState<number | null>(null);
+
+    const searchParams = useSearchParams();
+
+    // Handle initial selection from URL
+    useEffect(() => {
+        const id = searchParams.get("id");
+        if (id) {
+            const numId = parseInt(id);
+            if (!isNaN(numId)) {
+                setSelectedId(numId);
+            }
+        }
+    }, [searchParams]);
 
 
     const { commonTechs, archivedTechs, allTechs } = useMemo(() => {
