@@ -516,7 +516,7 @@ export default function ModusOperandi() {
                         >
                             Classified Documentation // Project 2026-X
                         </motion.span>
-                        <h1 className="text-6xl md:text-8xl font-display text-white tracking-widest uppercase mb-4 relative cursor-default">
+                        <h1 className="text-4xl sm:text-6xl md:text-8xl font-display text-white tracking-widest uppercase mb-4 relative cursor-default break-words">
                             Modus Operandi
                             <motion.div
                                 initial={{ width: 0 }}
@@ -586,7 +586,7 @@ export default function ModusOperandi() {
                     </div>
 
                     {/* Investigation Details / Evidence Sidebar - NEW CREATIVE SPACE */}
-                    <div className="lg:col-span-4 sticky top-12 space-y-8">
+                    <div className="lg:col-span-4 lg:sticky lg:top-24 space-y-8">
                         <IntelligenceMonitor activeSkill={activeSkill} />
 
                         {/* Static Identity Verification */}
@@ -698,7 +698,7 @@ export default function ModusOperandi() {
             </AnimatePresence>
 
             {/* Toasts */}
-            <div className="fixed bottom-8 left-8 z-[2000] space-y-2">
+            <div className="fixed bottom-20 sm:bottom-8 left-4 right-4 sm:left-8 sm:right-auto z-[2000] space-y-2 max-w-[calc(100vw-2rem)]">
                 <AnimatePresence>
                     {toasts.map((toast, j) => (
                         <motion.div

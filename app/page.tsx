@@ -12,13 +12,13 @@ export default function Home() {
   const [hoveredArtifact, setHoveredArtifact] = useState<string | null>(null);
 
   return (
-    <div className="relative w-full min-h-[calc(100vh-80px)] overflow-hidden flex items-center justify-center p-4">
+    <div className="relative w-full min-h-[calc(100vh-80px)] overflow-x-hidden overflow-y-auto flex flex-col md:flex-none md:items-center md:justify-center p-4 pb-24 md:pb-4">
       {/* Background Decor */}
       <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(circle_at_center,_#333_0%,_#0e0e0e_70%)]" />
 
       {/* Central Title */}
       <motion.div
-        className="z-20 text-center relative pointer-events-auto cursor-pointer"
+        className="z-20 text-center relative pointer-events-auto cursor-pointer flex-shrink-0 mt-4 md:mt-0"
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         onMouseEnter={() => setHoveredArtifact("hub")}
@@ -26,12 +26,12 @@ export default function Home() {
         whileHover={{ scale: 1.02, rotate: 1 }}
         transition={{ duration: 1, type: "spring", stiffness: 100 }}
       >
-        <div className="bg-[#1a1a1a]/80 backdrop-blur-md p-10 md:p-14 rounded-sm border-2 border-[#333] shadow-[0_0_50px_rgba(139,0,0,0.2)] relative overflow-hidden group">
+        <div className="bg-[#1a1a1a]/80 backdrop-blur-md p-6 sm:p-10 md:p-14 rounded-sm border-2 border-[#333] shadow-[0_0_50px_rgba(139,0,0,0.2)] relative overflow-hidden group max-w-[calc(100vw-2rem)]">
           {/* Decorative Corner Brackets */}
-          <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-accent-red opacity-50 group-hover:opacity-100 transition-opacity" />
-          <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-accent-red opacity-50 group-hover:opacity-100 transition-opacity" />
-          <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-accent-red opacity-50 group-hover:opacity-100 transition-opacity" />
-          <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-accent-red opacity-50 group-hover:opacity-100 transition-opacity" />
+          <div className="absolute top-2 left-2 sm:top-4 sm:left-4 w-6 h-6 sm:w-8 sm:h-8 border-t-2 border-l-2 border-accent-red opacity-50 group-hover:opacity-100 transition-opacity" />
+          <div className="absolute top-2 right-2 sm:top-4 sm:right-4 w-6 h-6 sm:w-8 sm:h-8 border-t-2 border-r-2 border-accent-red opacity-50 group-hover:opacity-100 transition-opacity" />
+          <div className="absolute bottom-2 left-2 sm:bottom-4 sm:left-4 w-6 h-6 sm:w-8 sm:h-8 border-b-2 border-l-2 border-accent-red opacity-50 group-hover:opacity-100 transition-opacity" />
+          <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 w-6 h-6 sm:w-8 sm:h-8 border-b-2 border-r-2 border-accent-red opacity-50 group-hover:opacity-100 transition-opacity" />
 
           {/* Pulse animation overlay */}
           <motion.div
@@ -40,66 +40,84 @@ export default function Home() {
             className="absolute inset-0 bg-accent-red pointer-events-none"
           />
 
-          <h1 className="text-6xl md:text-8xl font-display text-accent-red tracking-tighter drop-shadow-[0_0_15px_rgba(139,0,0,0.5)] mb-2">
+          <h1 className="text-4xl sm:text-6xl md:text-8xl font-display text-accent-red tracking-tighter drop-shadow-[0_0_15px_rgba(139,0,0,0.5)] mb-2">
             CASE #404
           </h1>
           <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-accent-red to-transparent mb-4 opacity-50" />
-          <h2 className="text-xl md:text-2xl font-display text-paper-yellow opacity-90 tracking-[0.2em] uppercase">
+          <h2 className="text-base sm:text-xl md:text-2xl font-display text-paper-yellow opacity-90 tracking-[0.15em] sm:tracking-[0.2em] uppercase px-1">
             SOLO CODES : THE DEVELOPER
           </h2>
 
-          {/* "Classified" stamp appearance on hover */}
+          {/* "Classified" stamp - hidden on very small screens to avoid overflow */}
           <motion.div
             initial={{ opacity: 0, scale: 2 }}
             whileHover={{ opacity: 0.8, scale: 1, rotate: -15 }}
-            className="absolute -top-2 -right-6 border-4 border-accent-red text-accent-red font-black px-4 py-2 text-4xl select-none pointer-events-none"
+            className="absolute -top-1 right-2 sm:-top-2 sm:-right-6 border-2 sm:border-4 border-accent-red text-accent-red font-black px-2 py-1 sm:px-4 sm:py-2 text-lg sm:text-4xl select-none pointer-events-none max-sm:hidden"
           >
             TOP SECRET
           </motion.div>
         </div>
       </motion.div>
 
+      {/* Mobile: grid of links below title (replaces overlapping absolute artifacts) */}
+      <div className="md:hidden grid grid-cols-2 gap-3 mt-8 px-2 max-w-md mx-auto w-full z-20">
+        <Link href="/suspect" className="bg-white/90 text-black p-4 rounded-lg border-2 border-gray-300 font-display text-sm uppercase tracking-wider text-center shadow-lg active:scale-[0.98]">
+          THE SUSPECT
+        </Link>
+        <Link href="/timeline" className="bg-[#f4e4bc]/95 text-red-900 p-4 rounded-lg border-2 border-amber-800/30 font-display text-sm uppercase tracking-wider text-center shadow-lg active:scale-[0.98]">
+          TIMELINE
+        </Link>
+        <Link href="/modus-operandi" className="bg-[#e0e0e0] text-black p-4 rounded-lg border-l-4 border-blue-800 border-2 border-gray-300 font-display text-sm uppercase tracking-wider text-center shadow-lg active:scale-[0.98]">
+          MODUS OPERANDI
+        </Link>
+        <Link href="/evidence" className="bg-[#d4c598] text-red-900 p-4 rounded-lg border-2 border-amber-900/30 font-display text-sm uppercase tracking-wider text-center shadow-lg active:scale-[0.98]">
+          EVIDENCE
+        </Link>
+      </div>
+
       {/* --- EXTRA CRIME SCENE ELEMENTS --- */}
 
-      {/* Crime Scene Tapes */}
-      <CrimeTape
-        yPercent={22}
-        rotation={-6}
-        delay={1}
-        tension={hoveredArtifact ? 0.6 : 0}
-      />
+      {/* Crime Scene Tapes - hidden on small screens to reduce clutter */}
+      <div className="hidden sm:block">
+        <CrimeTape
+          yPercent={22}
+          rotation={-6}
+          delay={1}
+          tension={hoveredArtifact ? 0.6 : 0}
+        />
+      </div>
 
       {/* Bottom Center - Chalk Outline & Evidence Pool */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[600px] pointer-events-none overflow-visible flex items-center justify-center">
-        {/* Large Blood Pool */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[400px] sm:h-[600px] pointer-events-none overflow-visible flex items-center justify-center">
+        {/* Large Blood Pool - responsive width */}
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 0.4 }}
-          className="absolute bottom-20 left-1/2 -translate-x-1/2 w-[600px] h-64 bg-[#4a0000] blur-[80px] rounded-[100%] z-0"
+          className="absolute bottom-20 left-1/2 -translate-x-1/2 w-[min(600px,90vw)] h-40 sm:h-64 bg-[#4a0000] blur-[60px] sm:blur-[80px] rounded-[100%] z-0"
         />
 
-        {/* Evidence Markers */}
-        <div className="absolute bottom-32 left-[40%] -translate-x-1/2 rotate-[-10deg] z-10">
-          <div className="w-8 h-8 bg-yellow-400 border border-black flex items-center justify-center font-bold text-black text-xs shadow-lg"
+        {/* Evidence Markers - hidden on very small screens */}
+        <div className="absolute bottom-24 sm:bottom-32 left-[35%] sm:left-[40%] -translate-x-1/2 rotate-[-10deg] z-10 hidden sm:block">
+          <div className="w-6 h-6 sm:w-8 sm:h-8 bg-yellow-400 border border-black flex items-center justify-center font-bold text-black text-[10px] sm:text-xs shadow-lg"
             style={{ clipPath: "polygon(50% 0%, 100% 100%, 0% 100%)" }}>
             01
           </div>
-          <div className="w-4 h-1 bg-black/20 blur-sm mt-1" />
+          <div className="w-3 h-0.5 sm:w-4 sm:h-1 bg-black/20 blur-sm mt-1" />
         </div>
 
-        <div className="absolute bottom-24 left-[60%] -translate-x-1/2 rotate-[15deg] z-10">
-          <div className="w-10 h-10 bg-yellow-400 border border-black flex items-center justify-center font-bold text-black text-xs shadow-lg"
+        <div className="absolute bottom-16 sm:bottom-24 left-[65%] sm:left-[60%] -translate-x-1/2 rotate-[15deg] z-10 hidden sm:block">
+          <div className="w-7 h-7 sm:w-10 sm:h-10 bg-yellow-400 border border-black flex items-center justify-center font-bold text-black text-[10px] sm:text-xs shadow-lg"
             style={{ clipPath: "polygon(50% 0%, 100% 100%, 0% 100%)" }}>
             02
           </div>
-          <div className="w-5 h-1 bg-black/20 blur-sm mt-1" />
+          <div className="w-4 h-0.5 sm:w-5 sm:h-1 bg-black/20 blur-sm mt-1" />
         </div>
       </div>
 
       {/* --- ARTIFACTS --- */}
 
-      {/* 1. Suspect Profile (Top Left) */}
-      <div className="absolute top-12 left-4 md:top-20 md:left-20 z-10"
+      {/* 1. Suspect Profile (Top Left) - desktop only; mobile uses grid below */}
+      <div className="hidden md:block absolute top-20 left-20 z-10"
         onMouseEnter={() => setHoveredArtifact("suspect")}
         onMouseLeave={() => setHoveredArtifact(null)}
       >
@@ -120,8 +138,8 @@ export default function Home() {
         </Link>
       </div>
 
-      {/* 2. Timeline (Top Right) */}
-      <div className="absolute top-12 right-4 md:top-24 md:right-24 z-10"
+      {/* 2. Timeline (Top Right) - desktop only */}
+      <div className="hidden md:block absolute top-24 right-24 z-10"
         onMouseEnter={() => setHoveredArtifact("timeline")}
         onMouseLeave={() => setHoveredArtifact(null)}
       >
@@ -133,8 +151,8 @@ export default function Home() {
         </Link>
       </div>
 
-      {/* 3. Skills / MO (Bottom Left) */}
-      <div className="absolute bottom-20 left-4 md:bottom-32 md:left-32 z-10"
+      {/* 3. Skills / MO (Bottom Left) - desktop only */}
+      <div className="hidden md:block absolute bottom-32 left-32 z-10"
         onMouseEnter={() => setHoveredArtifact("mo")}
         onMouseLeave={() => setHoveredArtifact(null)}
       >
@@ -149,8 +167,8 @@ export default function Home() {
         </Link>
       </div>
 
-      {/* 4. Evidence (Bottom Right) */}
-      <div className="absolute bottom-20 right-4 md:bottom-32 md:right-32 z-10"
+      {/* 4. Evidence (Bottom Right) - desktop only */}
+      <div className="hidden md:block absolute bottom-32 right-32 z-10"
         onMouseEnter={() => setHoveredArtifact("evidence")}
         onMouseLeave={() => setHoveredArtifact(null)}
       >

@@ -85,7 +85,7 @@ const EVIDENCE: Project[] = [
     },
     {
         id: 7,
-        title: "Murder Mystry portfolio",
+        title: "Murder mystery portfolio",
         type: "Website",
         images: ["/images/projects/portfolio/1.png", "/images/projects/portfolio/2.png"],
         tech: ["NextJs", "Tailwind"],
@@ -185,7 +185,7 @@ function EvidenceContent() {
     }, [fullscreenImageIndex, selectedItem]);
 
     return (
-        <div className="container mx-auto p-8 relative min-h-screen">
+        <div className="container mx-auto p-4 sm:p-6 md:p-8 relative min-h-screen">
 
 
 
@@ -195,17 +195,17 @@ function EvidenceContent() {
                 style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/cork-board.png')" }}>
             </div>
 
-            <div className="text-center mb-16 relative">
+            <div className="text-center mb-10 sm:mb-16 relative">
                 <motion.div
                     initial={{ y: -50, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    className="inline-block bg-[#f4e4bc] px-12 py-6 shadow-[10px_10px_20px_rgba(0,0,0,0.1)] transform -rotate-1 border border-[#d3c299] relative"
+                    className="inline-block bg-[#f4e4bc] px-6 py-4 sm:px-12 sm:py-6 shadow-[10px_10px_20px_rgba(0,0,0,0.1)] transform -rotate-1 border border-[#d3c299] relative max-w-[calc(100vw-2rem)]"
                 >
                     {/* Tape on top edges */}
-                    <div className="absolute -top-4 left-1/4 w-16 h-8 bg-white/30 backdrop-blur-sm -rotate-3 shadow-sm border border-white/10" />
-                    <div className="absolute -top-2 right-1/4 w-12 h-6 bg-white/20 backdrop-blur-sm rotate-6 shadow-sm border border-white/10" />
+                    <div className="absolute -top-4 left-1/4 w-12 h-6 sm:w-16 sm:h-8 bg-white/30 backdrop-blur-sm -rotate-3 shadow-sm border border-white/10" />
+                    <div className="absolute -top-2 right-1/4 w-10 h-5 sm:w-12 sm:h-6 bg-white/20 backdrop-blur-sm rotate-6 shadow-sm border border-white/10" />
 
-                    <h1 className="text-6xl font-display text-red-950 drop-shadow-sm tracking-[0.2em] uppercase mb-1">
+                    <h1 className="text-3xl sm:text-5xl md:text-6xl font-display text-red-950 drop-shadow-sm tracking-[0.15em] sm:tracking-[0.2em] uppercase mb-1">
                         Evidence Board
                     </h1>
                     <p className="text-gray-600 font-mono text-[10px] uppercase tracking-[0.4em] opacity-80">
@@ -215,8 +215,8 @@ function EvidenceContent() {
             </div>
 
             {/* Filter & Search UI */}
-            <div className="max-w-5xl mx-auto mb-16 space-y-6">
-                <div className="flex flex-col lg:flex-row gap-6 items-start lg:items-center justify-between bg-black/5 p-6 backdrop-blur-md border border-black/10 rounded-sm relative group z-[100]">
+            <div className="max-w-5xl mx-auto mb-10 sm:mb-16 space-y-6">
+                <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 items-start lg:items-center justify-between bg-black/5 p-4 sm:p-6 backdrop-blur-md border border-black/10 rounded-sm relative group z-[100]">
                     {/* Decorative tape on corners */}
                     <div className="absolute -top-1 -left-1 w-8 h-4 bg-black/5 rotate-[45deg] pointer-events-none" />
                     <div className="absolute -bottom-1 -right-1 w-8 h-4 bg-black/5 rotate-[45deg] pointer-events-none" />
@@ -311,7 +311,7 @@ function EvidenceContent() {
             {/* Grid of Evidence (Scatter Layout) */}
             <motion.div
                 layout
-                className="flex flex-wrap justify-center gap-x-12 gap-y-28 relative pb-32"
+                className="flex flex-wrap justify-center gap-x-6 gap-y-16 sm:gap-x-12 sm:gap-y-28 relative pb-24 sm:pb-32"
                 initial="hidden"
                 animate="visible"
                 variants={{
@@ -401,15 +401,16 @@ function EvidenceContent() {
                             className="bg-[#f0f0f0] text-black w-full max-w-4xl p-2 shadow-2xl rounded-sm overflow-hidden max-h-[90vh] flex flex-col"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <div className="border border-gray-300 p-8 bg-white relative overflow-y-auto flex-1 scrollbar-thin scrollbar-thumb-red-900/20 scrollbar-track-transparent">
+                            <div className="border border-gray-300 p-4 sm:p-6 md:p-8 bg-white relative overflow-y-auto flex-1 scrollbar-thin scrollbar-thumb-red-900/20 scrollbar-track-transparent">
                                 <button
                                     onClick={() => setSelectedId(null)}
-                                    className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors"
+                                    className="absolute top-2 right-2 sm:top-4 sm:right-4 p-2 hover:bg-gray-100 rounded-full transition-colors touch-manipulation"
+                                    aria-label="Close"
                                 >
-                                    <X className="w-6 h-6" />
+                                    <X className="w-5 h-5 sm:w-6 sm:h-6" />
                                 </button>
 
-                                <h2 className="text-3xl font-display mb-2 border-b-2 border-red-800 inline-block text-red-900">
+                                <h2 className="text-xl sm:text-2xl md:text-3xl font-display mb-2 border-b-2 border-red-800 inline-block text-red-900 break-words">
                                     INCIDENT REPORT: {selectedItem.title}
                                 </h2>
 
@@ -536,10 +537,11 @@ function EvidenceContent() {
                         onClick={() => setFullscreenImageIndex(null)}
                     >
                         <button
-                            className="absolute top-8 right-8 text-white/50 hover:text-white transition-colors z-[2100]"
+                            className="absolute top-4 right-4 sm:top-8 sm:right-8 text-white/50 hover:text-white transition-colors z-[2100] p-2 touch-manipulation"
                             onClick={() => setFullscreenImageIndex(null)}
+                            aria-label="Close"
                         >
-                            <X className="w-10 h-10" />
+                            <X className="w-8 h-8 sm:w-10 sm:h-10" />
                         </button>
 
                         {/* Navigation Controls */}

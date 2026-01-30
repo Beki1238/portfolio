@@ -26,6 +26,12 @@ export const metadata: Metadata = {
   description: "An unsolved mystery portfolio.",
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -169,7 +175,7 @@ export default function RootLayout({
         </div>
 
         <Navigation />
-        <main className="min-h-screen pt-20 relative z-10">
+        <main className="min-h-screen pt-16 md:pt-20 relative z-10">
           {children}
         </main>
       </body>

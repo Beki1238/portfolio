@@ -5,6 +5,7 @@ import { motion, useSpring, useMotionValue } from "framer-motion";
 
 export const CustomCursor = () => {
     const [isMounted, setIsMounted] = useState(false);
+    const [isPointer, setIsPointer] = useState(false);
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
@@ -15,25 +16,36 @@ export const CustomCursor = () => {
 
     useEffect(() => {
         setIsMounted(true);
+        // Only show custom cursor on devices with precise pointer (not touch)
+        const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
+        setIsPointer(mq.matches);
+        const handler = () => setIsPointer(mq.matches);
+        mq.addEventListener("change", handler);
+        return () => mq.removeEventListener("change", handler);
+    }, []);
+
+    useEffect(() => {
+        if (!isPointer) return;
         const handleMouseMove = (e: MouseEvent) => {
             mouseX.set(e.clientX);
             mouseY.set(e.clientY);
         };
-
         window.addEventListener("mousemove", handleMouseMove);
         return () => window.removeEventListener("mousemove", handleMouseMove);
-    }, [mouseX, mouseY]);
+    }, [isPointer, mouseX, mouseY]);
 
-    if (!isMounted) return null;
+    if (!isMounted || !isPointer) return null;
 
     return (
         <>
             <style jsx global>{`
-        body {
-          cursor: none !important;
-        }
-        a, button, [role="button"], .cursor-pointer, .group {
-          cursor: none !important;
+        @media (hover: hover) and (pointer: fine) {
+          body {
+            cursor: none !important;
+          }
+          a, button, [role="button"], .cursor-pointer, .group {
+            cursor: none !important;
+          }
         }
       `}</style>
 
