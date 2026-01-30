@@ -5,9 +5,14 @@ import { GithubHeatmap } from "@/components/ui/GithubHeatmap";
 import { Terminal, Activity, ShieldAlert, Monitor, Fingerprint } from "lucide-react";
 
 const TIMELINE = [
-    { date: "JAN 2026", event: "The Current Suspect", desc: "Building independent projects and seeking new challenges.", status: "ACTIVE", type: "CRITICAL" },
-    { date: "OCT 2023", event: "Senior Developer", desc: "Led a team of 5. Shipped production code to 1M+ users.", status: "RESOLVED", type: "MAJOR" },
-    { date: "SEP 2021", event: "Computer Science Degree", desc: "Enrolled in University. Learned the theory behind the madness.", status: "COMPLETED", type: "INTEL" },
+    { date: "OCT 2025 - PRESENT", event: "RONIN GLOBAL", desc: "Creating AI driven full stack apps and crafting the future of marketing and Advertisement", status: "ACTIVE", type: "CRITICAL" },
+    { date: "APR 2025 - SEP 2025", event: "BOXSY", desc: "Full stack development using next.js and python and AI to build a modern web solutions.", status: "RESOLVED", type: "MAJOR" },
+    { date: "OCT 2024 - PRESENT", event: "GDG Lead at Google Developers Group", desc: "As a GDG Lead, I serve as a community organizer and ecosystem builder, officially recognized by Google Developers.", status: "ACTIVE", type: "MAJOR" },
+    { date: "JAN 2024 - JUL 2024", event: "Full Stack Developer at Malefia", desc: "Building a full stack application for a local brand.", status: "RESOLVED", type: "MAJOR" },
+    { date: "OCT 2023 - OCT 2025", event: "Full stack developer at M.A.D technology", desc: "Building a full stack application for a local startup.", status: "RESOLVED", type: "MAJOR" },
+    { date: "MAR 2023 - OCT 2025", event: "Head of Education at A2SV", desc: "To educate the next generation in the world of computer science.", status: "RESOLVED", type: "MAJOR" },
+    { date: "OCT 2022- JUL 2024", event: "Full Stack Developer at Chakka", desc: "Worked on a full stack application for a local brand.", status: "RESOLVED", type: "MAJOR" },
+    { date: "SEP 2022-SEP 2026", event: "Computer Science Degree", desc: "Enrolled in University. Learned the theory behind the madness.", status: "COMPLETED", type: "INTEL" },
     { date: "MAR 2019", event: "First Freelance Gig", desc: "Built a WordPress site for a local bakery. Paid in croissants.", status: "ARCHIVED", type: "MINOR" },
     { date: "JUN 2018", event: "Discovered Programming", desc: "First encounter with Python. The obsession began.", status: "ARCHIVED", type: "ORIGIN" },
 ];
@@ -64,17 +69,18 @@ export default function TimelinePage() {
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: index * 0.1 }}
                                 whileHover={{ x: 4 }}
-                                className="group relative bg-[#121212] border border-white/5 p-5 transition-all hover:border-accent-red/30 hover:bg-accent-red/5 cursor-default z-10 shadow-lg"
+                                className={`group relative border border-white/5 p-5 transition-all cursor-default z-10 shadow-lg ${item.status === 'ACTIVE'
+                                    ? 'bg-green-950/20 hover:bg-green-900/30 hover:border-green-500/30'
+                                    : 'bg-[#121212] hover:border-accent-red/30 hover:bg-accent-red/5'
+                                    }`}
                             >
                                 {/* Connection Line to String */}
-                                <div className="absolute left-[-24px] top-1/2 w-6 h-px bg-red-600/40 group-hover:bg-red-600 transition-colors" />
+                                <div className={`absolute left-[-24px] top-1/2 w-6 h-px transition-colors ${item.status === 'ACTIVE' ? 'bg-green-600/40 group-hover:bg-green-500' : 'bg-red-600/40 group-hover:bg-red-600'
+                                    }`} />
 
-                                <div className="flex justify-between items-start mb-3">
-                                    <span className={`font-mono text-[9px] px-1.5 py-0.5 rounded ${item.status === 'ACTIVE' ? 'bg-green-500/10 text-green-500' : 'bg-white/5 text-gray-500'
+                                <div className="flex justify-start items-start mb-3">
+                                    <span className={`font-display text-lg font-bold tracking-tighter drop-shadow-[0_0_8px_rgba(255,0,0,0.6)] ${item.status === 'ACTIVE' ? 'text-green-500' : 'text-red-500'
                                         }`}>
-                                        {item.status}
-                                    </span>
-                                    <span className="font-display text-lg text-red-500 font-bold tracking-tighter drop-shadow-[0_0_8px_rgba(255,0,0,0.6)]">
                                         {item.date}
                                     </span>
                                 </div>
@@ -95,7 +101,7 @@ export default function TimelinePage() {
 
                                 {/* Active Pulse Indicator */}
                                 {item.status === 'ACTIVE' && (
-                                    <div className="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-6 bg-accent-red shadow-[0_0_15px_rgba(139,0,0,1)] z-20" />
+                                    <div className="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-6 bg-green-500 shadow-[0_0_15px_rgba(34,197,94,1)] z-20" />
                                 )}
                             </motion.div>
                         ))}
