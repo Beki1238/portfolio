@@ -1,15 +1,18 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { StickyNote } from "@/components/ui/StickyNote";
 import { Polaroid } from "@/components/ui/Polaroid";
 import Link from "next/link";
 import { CrimeTape } from "@/components/ui/CrimeTape";
 import { RedString } from "@/components/ui/RedString";
+import { Flashlight } from "@/components/ui/Flashlight";
+import { Lightbulb, LightbulbOff } from "lucide-react";
 
 export default function Home() {
   const [hoveredArtifact, setHoveredArtifact] = useState<string | null>(null);
+  const [flashlightEnabled, setFlashlightEnabled] = useState(false);
 
   return (
     <div className="relative w-full min-h-[calc(100vh-80px)] overflow-x-hidden overflow-y-auto flex flex-col md:flex-none md:items-center md:justify-center p-4 pb-24 md:pb-4">
@@ -105,6 +108,26 @@ export default function Home() {
               <div className="absolute -top-4 left-0 w-16 h-6 bg-[#d4c598] rounded-t-lg border-t border-l border-r border-black/20 shadow-sm" />
               <span className="text-red-900 font-display text-xl font-bold tracking-widest z-10 drop-shadow-sm">EVIDENCE</span>
               <div className="absolute top-2 right-4 w-32 h-24 bg-white/90 shadow-sm rotate-3 group-hover:rotate-12 transition-transform duration-500 z-0 border border-black/5" />
+            </motion.div>
+          </Link>
+
+          <Link href="/archive#locker" className="block" onMouseEnter={() => setHoveredArtifact("trophies")} onMouseLeave={() => setHoveredArtifact(null)}>
+            <motion.div
+              whileTap={{ scale: 1.05 }}
+              className="bg-[#2a2a2a] w-full max-w-[240px] h-20 border-r-8 border-yellow-600 p-4 shadow-xl cursor-pointer flex flex-col justify-center items-center rotate-2 border border-[#1a1a1a] ml-6"
+            >
+              <span className="font-display text-lg text-white leading-none text-center">STORAGE<br />LOCKER</span>
+              <span className="text-[10px] font-mono mt-1 text-gray-500 uppercase tracking-[0.2em]">Trophies</span>
+            </motion.div>
+          </Link>
+
+          <Link href="/archive#surveillance" className="block" onMouseEnter={() => setHoveredArtifact("interviews")} onMouseLeave={() => setHoveredArtifact(null)}>
+            <motion.div
+              whileTap={{ scale: 1.1 }}
+              className="bg-[#0a0a0a] w-full max-w-[240px] h-20 border-l-8 border-green-800 p-4 shadow-xl cursor-pointer flex flex-col justify-center items-center -rotate-1 border border-green-950/20 ml-2"
+            >
+              <span className="font-display text-lg text-green-500 leading-none text-center">WIRETAP<br />LOGS</span>
+              <span className="text-[10px] font-mono mt-1 text-green-800 uppercase tracking-[0.2em]">Interviews</span>
             </motion.div>
           </Link>
         </div>
@@ -219,6 +242,38 @@ export default function Home() {
         </Link>
       </div>
 
+      {/* 5. Trowphies (Mid Bottom) - desktop only */}
+      <div className="hidden md:block absolute bottom-10 left-1/2 -translate-x-1/2 z-10"
+        onMouseEnter={() => setHoveredArtifact("trophies")}
+        onMouseLeave={() => setHoveredArtifact(null)}
+      >
+        <Link href="/archive#locker">
+          <motion.div
+            whileHover={{ scale: 1.1, rotate: -2, y: -5 }}
+            className="bg-[#2a2a2a] w-44 h-16 border-r-8 border-yellow-600 p-4 shadow-xl cursor-pointer flex flex-col justify-center items-center -rotate-1 border border-[#1a1a1a]"
+          >
+            <span className="font-display text-lg text-white leading-none text-center">STORAGE LOCKER</span>
+            <span className="text-[9px] font-mono mt-1 text-gray-500 uppercase tracking-[0.2em]">Achievements</span>
+          </motion.div>
+        </Link>
+      </div>
+
+      {/* 6. Interviews / Wiretap (Bottom Right-ish) - desktop only */}
+      <div className="hidden md:block absolute bottom-24 right-64 z-10"
+        onMouseEnter={() => setHoveredArtifact("interviews")}
+        onMouseLeave={() => setHoveredArtifact(null)}
+      >
+        <Link href="/archive#surveillance">
+          <motion.div
+            whileHover={{ scale: 1.15, rotate: 3, y: -10 }}
+            className="bg-[#0a0a0a] w-40 h-20 border-l-8 border-green-800 p-4 shadow-xl cursor-pointer flex flex-col justify-center items-center rotate-2 border border-green-950/20"
+          >
+            <span className="font-display text-lg text-green-500 leading-none text-center">WIRETAP LOGS</span>
+            <span className="text-[9px] font-mono mt-1 text-green-800 uppercase tracking-[0.2em]">Transcripts</span>
+          </motion.div>
+        </Link>
+      </div>
+
       {/* --- STRINGS --- */}
       <div className="absolute inset-0 pointer-events-none hidden md:block">
         {/* Strings connected to center hub (50/50) */}
@@ -240,13 +295,40 @@ export default function Home() {
           tension={hoveredArtifact === "mo" || hoveredArtifact === "hub" ? 1 : 0}
         />
 
-        {/* Evidence (centered at roughly 80/75) */}
+        {/* Interviews (centered at roughly 78/70) */}
         <RedString
-          x1Percent={82} y1Percent={76} x2Percent={50} y2Percent={50} delay={1.1}
-          tension={hoveredArtifact === "evidence" || hoveredArtifact === "hub" ? 1 : 0}
+          x1Percent={78} y1Percent={75} x2Percent={50} y2Percent={50} delay={1.5}
+          tension={hoveredArtifact === "interviews" || hoveredArtifact === "hub" ? 1 : 0}
         />
       </div>
 
+      {/* Flashlight Effect */}
+      <Flashlight enabled={flashlightEnabled} />
+
+      {/* Flashlight Toggle Button */}
+      <motion.button
+        onClick={() => setFlashlightEnabled(!flashlightEnabled)}
+        className={`fixed bottom-8 left-8 z-[10000] p-4 rounded-full border-2 transition-all duration-500 shadow-2xl flex items-center justify-center
+          ${flashlightEnabled
+            ? "bg-yellow-400 border-yellow-600 text-yellow-900 scale-110 rotate-12"
+            : "bg-gray-800 border-gray-600 text-gray-400 hover:scale-105 active:scale-95"}`}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        title={flashlightEnabled ? "Turn off flashlight" : "Turn on flashlight"}
+      >
+        {flashlightEnabled ? <Lightbulb className="w-6 h-6" /> : <LightbulbOff className="w-6 h-6" />}
+
+        {/* Helper tooltip for first time users */}
+        {!flashlightEnabled && (
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="absolute left-full ml-4 whitespace-nowrap bg-red-900 text-white text-[10px] font-mono px-2 py-1 uppercase tracking-widest hidden sm:block pointer-events-none"
+          >
+            Investigate Scene
+          </motion.div>
+        )}
+      </motion.button>
     </div>
   );
 }
