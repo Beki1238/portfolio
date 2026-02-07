@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Special_Elite, Permanent_Marker } from "next/font/google";
 import { Navigation } from "@/components/Navigation";
 import { CustomCursor } from "@/components/CustomCursor";
-import { Analytics } from '@vercel/analytics/next';
+import { Analytics } from '@vercel/analytics/react';
 import "./globals.css";
 
 const inter = Inter({
